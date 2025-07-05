@@ -1,0 +1,54 @@
+test1
+
+CONSOLE OUTPUT:
+Error: Cart is empty.
+Error Cannot make the transaction
+-----------------------------------------------------------------------------------------
+test2
+
+CONSOLE OUTPUT:
+
+** Checkout receipt **
+1x scratch      20.0
+----------------------
+Subtotal $20
+Shipping $0.0
+Amount $20.0
+Customer's balance is now: 19980
+CONSOLE OUTPUT:
+Error: scratch's stock is not enough.
+Error Cannot make the transaction
+-----------------------------------------------------------------------------------------
+test3
+
+CONSOLE OUTPUT:
+Error: cheese is expired.
+Error Cannot make the transaction
+-----------------------------------------------------------------------------------------
+test4
+
+CONSOLE OUTPUT:
+Error: Balance is not enough.
+Error Cannot make the transaction
+-----------------------------------------------------------------------------------------
+test5
+
+CONSOLE OUTPUT:
+Error: Balance is not enough.
+Error Cannot make the transaction
+-----------------------------------------------------------------------------------------
+test6
+
+CONSOLE OUTPUT:
+** Shipment notice **
+2x cheese       400.0
+Totoal Package weight 0.2kg
+
+
+** Checkout receipt **
+2x cheese       20.0
+----------------------
+Subtotal $20
+Shipping $4.0
+Amount $24.0
+Customer's balance is now: 176

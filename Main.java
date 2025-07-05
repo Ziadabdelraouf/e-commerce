@@ -142,11 +142,11 @@ class Customer {
         this.balance += balance;
     }
 
-    public void removeBalance(int balance) {
-        if (balance > 0) {
+    public void removeBalance(double balance) {
+        if (balance < 0) {
             return;
         }
-        this.balance += balance;
+        this.balance -= balance;
     }
 }
 
@@ -189,7 +189,7 @@ class Cart {
             }
             if (key instanceof shippable ship) {
                 shipp.put(ship, value);
-                subTotal += ship.getWeight() * 0.02;
+                subTotal += Math.ceil(ship.getWeight() * 0.02);
             }
             subTotal += value * key.getPrice();
         }
@@ -202,7 +202,7 @@ class Cart {
     }
 
     //this function prints the reciept
-    public boolean print(double totalWeight) {
+    public boolean print(double totalWeight, Customer c1) {
         Map<product, Integer> mp = this.list;
         long subTotal = 0;
 
@@ -218,8 +218,10 @@ class Cart {
         System.out.println("----------------------");
         System.out.println("Subtotal $" + subTotal);
         System.out.println("Shipping $" + totalWeight * 0.02);
-        System.out.println("Amount $" + (subTotal + 0.02 * totalWeight));
+        System.out.println("Amount $" + (subTotal + Math.ceil(0.02 * totalWeight)));
         list.clear();
+        c1.removeBalance((subTotal + Math.ceil(0.02 * totalWeight)));
+        System.out.println("Customer's balance is now: " + c1.balance);
         return true;
     }
 }
@@ -291,7 +293,7 @@ public class Main {
         if (!shipp.isEmpty()) {
             Weight = ShippingService.printNotice(shipp);
         }
-        car.print(Weight);
+        car.print(Weight, custom);
 
     }
 

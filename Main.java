@@ -246,20 +246,37 @@ class ShippingService {
 public class Main {
 
     public static void main(String[] args) {
-        Cart cart = new Cart();
-        Cart cart1 = new Cart();
-        Customer custom = new Customer(20000);
-        product p1 = new productNormal("pppp", 30, 3);
-        product cheese = new productShipExp(LocalDate.now().plusDays(2), "cheese", 100, 2, 200);
-        productShip tv = new productShip("tv", 2, 3, 100);
-        product scratchCard = new productNormal("scratch", 20, 1);
-        cart.add(p1, 1);
-        cart.add(cheese, 2);
-        cart.add(tv, 3);
-        cart.add(scratchCard, 1);
-        cart1.add(scratchCard, 1);
-        checkout(custom, cart1);
-        checkout(custom, cart);
+        //empty cart test
+        System.out.println("test1");
+        test1();
+        System.err.println("-----------------------------------------------------------------------------------------");
+        //item is sold out 
+        System.out.println("test2");
+        test2();
+        System.err.println("-----------------------------------------------------------------------------------------");
+
+        //expired item
+        System.out.println("test3");
+
+        test3();
+        System.err.println("-----------------------------------------------------------------------------------------");
+
+        //not enough balance
+        System.out.println("test4");
+
+        test4();
+        System.err.println("-----------------------------------------------------------------------------------------");
+
+        //not enough balance after shipping fees
+        System.out.println("test5");
+
+        test5();
+        System.err.println("-----------------------------------------------------------------------------------------");
+
+        //passed all checks
+        System.out.println("test6");
+
+        test6();
     }
 
     private static void checkout(Customer custom, Cart car) {
@@ -277,4 +294,62 @@ public class Main {
         car.print(Weight);
 
     }
+
+    //empty cart test
+    public static void test1() {
+        Cart cart = new Cart();
+        Customer custom = new Customer(20);
+        checkout(custom, cart);
+    }
+
+    //not enough stock (if no enough stock when adding to cart addition is cancelled )
+    public static void test2() {
+        product scratchCard = new productNormal("scratch", 20, 1);
+        Customer custom = new Customer(20000);
+        Cart cart = new Cart();
+        Cart cart1 = new Cart();
+        cart.add(scratchCard, 1);
+        cart1.add(scratchCard, 1);
+        checkout(custom, cart1);
+        checkout(custom, cart);
+    }
+
+    //expired product
+    public static void test3() {
+        Cart cart = new Cart();
+        Customer custom = new Customer(20);
+        product scratchCard = new productNormal("scratch", 1, 1);
+        product cheese = new productShipExp(LocalDate.now().minusDays(2), "cheese", 1, 2, 200);
+        cart.add(scratchCard, 1);
+        cart.add(cheese, 2);
+        checkout(custom, cart);
+    }
+
+    //not enough balance
+    public static void test4() {
+        Cart cart = new Cart();
+        Customer custom = new Customer(20);
+        product scratchCard = new productNormal("scratch", 21, 1);
+        cart.add(scratchCard, 1);
+        checkout(custom, cart);
+    }
+
+    //not enough balance beacuase of shipping fees
+    public static void test5() {
+        Cart cart = new Cart();
+        Customer custom = new Customer(20);
+        product cheese = new productShipExp(LocalDate.now().plusDays(2), "cheese", 20, 2, 20000);
+        cart.add(cheese, 1);
+        checkout(custom, cart);
+    }
+
+    //all cases passed 
+    public static void test6() {
+        Customer custom = new Customer(200);
+        Cart cart = new Cart();
+        product cheese = new productShipExp(LocalDate.now().plusDays(2), "cheese", 10, 2, 200);
+        cart.add(cheese, 2);
+        checkout(custom, cart);
+    }
+
 }
